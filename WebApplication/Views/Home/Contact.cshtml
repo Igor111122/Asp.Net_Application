@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Повідомлення";
+}
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="@Url.Content("/Content/Site.css")" rel="stylesheet" />
+</head>
+
+<h2>Повідомлення</h2>
+
+<div>
+    <input type="text" id="UserID" placeholder="Введіть ID користувача! (тільки цифри)" maxlength="5"/>
+    <button id="Show_User_Message">Відобразити</button>
+</div>
+
+<div id="messages">
+    <!-- Тут будуть відображатись повідомлення -->
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#Show_User_Message").click(function () {
+                var UserID = $("#UserID").val();
+                $.get("@Url.Action("Show_User_massage")", { UserID: UserID }, function (data) {
+                    $("#messages").html(data);
+                    $("#UserID").val("");
+                });
+            });
+
+            function loadMessages() {
+                $.get("@Url.Action("GetMessages")", function (data) {
+                    $("#messages").html(data);
+                });
+            }
+        });
+    </script>
+}

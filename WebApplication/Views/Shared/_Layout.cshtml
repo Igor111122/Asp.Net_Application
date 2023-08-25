@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - приложение ASP.NET</title>
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="@Url.Content("/Content/Site.css")" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav_container">
+            @Html.ActionLink("Головна сторінка повідомлень", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <ul class="navbar-nav">
+                    <li>@Html.ActionLink("Вивід повідомлень користувачів", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - мій додаток ASP.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

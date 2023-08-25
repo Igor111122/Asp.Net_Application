@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Повідомлення";
+}
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="@Url.Content("/Content/Site.css")" rel="stylesheet"/>
+</head>
+
+<body>
+    <h2>Повідомлення</h2>
+
+    <div>
+        <input type="text" id="messageText" placeholder="Введіть текст повідомлення!" />
+        <input type="text" id="UserID" placeholder="Введіть ID користувача! (тільки цифри)" maxlength="5"/>
+        <button id="sendMessage">Відправити</button>
+    </div>
+
+    <div>
+        <select name="user_profile_color_1" id="selected_sort">
+            <option value="Id">Id</option>
+            <option value="Date">Date</option>
+        </select>
+        <button id="sort_Message">Відсорторувати</button>
+    </div>
+
+    <div id="User_messages">
+        <!-- Тут будуть відображатись повідомлення -->
+    </div>
+</body>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#sort_Message").click(function () {
+                var selected_Sort1 = $("#selected_sort").val();
+                $.get("@Url.Action("Sort")", { Type_Sort: selected_Sort1 }, function (data) {
+                    $("#User_messages").html(data);
+                });
+            });
+
+            $("#sendMessage").click(function () {
+                var messageText = $("#messageText").val();
+                var UserID = $("#UserID").val();
+                $.post("@Url.Action("SendMessage")", { text: messageText, User: UserID }, function (response) {
+                    if (response.success) {
+                        $("#messageText").val("");
+                        loadMessages();
+                    } else {
+                        alert(response.message);
+                    }
+                });
+            });
+
+            function loadMessages() {
+                $.get("@Url.Action("GetMessages")", function (data) {
+                    $("#User_messages").html(data);
+                });
+            }
+            loadMessages();
+        });
+    </script>
+}

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebApplication.Models.Message>
+
+<ul>
+    @foreach (var message in Model)
+    {
+        <li>
+            User ID: @message.UserId<br />
+            Text: @message.Text<br />
+            Date: @message.Date.ToString()
+        </li>
+    }
+</ul>
